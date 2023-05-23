@@ -1,6 +1,6 @@
 import './App.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Routes, Route, Navigate, RouteProps } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, RouteProps, useNavigate } from 'react-router-dom';
 import './index.css';
 import Floorplan from './pages/Floorplan';
 import Login from './pages/Login';
@@ -14,10 +14,12 @@ const queryClient = new QueryClient();
 // Custom wrapper component to check authentication
 const ProtectedRoute: React.FC<RouteProps> = ({ element, ...rest }) => {
   const { user } = useContext(UserContext)!;
+  const navigate = useNavigate();
     console.log(user)
-  if (!user.token) {
-    return <Navigate to="/login" />;
-  }
+    if (!user.token) {
+      navigate('/login');
+      return null;
+    }
 
   return <Route {...rest} element={element} />;
 };
