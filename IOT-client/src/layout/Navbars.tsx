@@ -23,7 +23,7 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
     }
   };
 
-  const { user, setUser } = useContext(UserContext)!;
+  const { setUser } = useContext(UserContext)!;
   const navigate = useNavigate();
   const { mutate: logout } = useLogout();
 
@@ -55,10 +55,6 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
     navigate('/login');
   };
 
-  if (!user.token) {
-    navigate('/login');
-    return null;
-  }
 
   return (
     <>

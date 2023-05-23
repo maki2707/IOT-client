@@ -7,17 +7,17 @@ import queryClient from '../util/queryClients';
 const Dashboard: React.FC = () => {
   const { user } = useContext(UserContext)!;
   const navigate = useNavigate();
-  const { data: userData } = useGetUser();
-  
-  if(user.name === '')
-  {
-    queryClient.invalidateQueries(userData)
-  }
+  const { data: userData, refetch } = useGetUser();
 
-  if (!user.token) {
-    navigate('/');
-    return null;
-  }
+  useEffect(() => {
+    if (user.token === '') {
+      console.log(user);
+      console.log('nekaj');
+      navigate('/login');
+      return;
+    }
+    refetch();
+  }, [user, navigate, refetch]);
 
   return (
     <>

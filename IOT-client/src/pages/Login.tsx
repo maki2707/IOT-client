@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useMutation } from 'react-query';
 import { useLogin } from '../hooks/useLogin';
@@ -8,26 +8,26 @@ import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/images/undraw_Hello_re_3evm.png';
 import { UserContext } from '../context/userContext';
 import useGetUser from '../hooks/useGetUser';
+import queryClient from '../util/queryClients';
 
 const LoginForm = () => {
   const [form] = Form.useForm();
-  const {setUser} = useContext(UserContext)!;
- 
+  const { user, setUser } = useContext(UserContext)!;
+
   const loginMutation = useLogin();
   const navigate = useNavigate();
+
   const onFinish = async (values: userCredentials) => {
     try {
       await loginMutation.mutateAsync(values, {
-        onSuccess: (data) => {
-          setTimeout(() => {
-            console.log(data.data);
-          }, 1000);
+        onSuccess: async (data) => {
           const name = '';
-          const { token, refreshToken } = data.data; 
-          setUser({ token, refreshToken, name  }); 
+          const { token, refreshToken } = data.data;
+          setUser({ token, refreshToken, name });
+          await queryClient.invalidateQueries('userData');
           toast.success('Login successful!');
-          form.resetFields();
           navigate('/');
+          form.resetFields();
         },
         onError: (error) => {
           toast.error('Login failed!');
@@ -39,6 +39,9 @@ const LoginForm = () => {
       console.error(error);
     }
   };
+  
+
+  
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
