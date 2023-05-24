@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import useGetUser from '../hooks/useGetUser';
-import queryClient from '../util/queryClients';
-
 const Dashboard: React.FC = () => {
   const { user } = useContext(UserContext)!;
   const navigate = useNavigate();
@@ -18,6 +16,8 @@ const Dashboard: React.FC = () => {
     }
     refetch();
   }, [user, navigate, refetch]);
+
+ 
 
   return (
     <>

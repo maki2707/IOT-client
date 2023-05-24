@@ -1,19 +1,16 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, } from 'react';
 import { Form, Input, Button } from 'antd';
-import { useMutation } from 'react-query';
 import { useLogin } from '../hooks/useLogin';
 import { toast } from 'react-toastify';
 import { userCredentials } from '../types/userCredentials';
 import { useNavigate } from 'react-router-dom';
 import loginImage from '../assets/images/undraw_Hello_re_3evm.png';
 import { UserContext } from '../context/userContext';
-import useGetUser from '../hooks/useGetUser';
 import queryClient from '../util/queryClients';
 
 const LoginForm = () => {
   const [form] = Form.useForm();
-  const { user, setUser } = useContext(UserContext)!;
-
+  const { setUser } = useContext(UserContext)!;
   const loginMutation = useLogin();
   const navigate = useNavigate();
 
@@ -22,8 +19,9 @@ const LoginForm = () => {
       await loginMutation.mutateAsync(values, {
         onSuccess: async (data) => {
           const name = '';
+          const customerId = ''
           const { token, refreshToken } = data.data;
-          setUser({ token, refreshToken, name });
+          setUser({ token, refreshToken, name, customerId });
           await queryClient.invalidateQueries('userData');
           toast.success('Login successful!');
           navigate('/');

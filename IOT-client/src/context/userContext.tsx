@@ -4,6 +4,7 @@ interface User {
   token: string;
   refreshToken: string;
   name: string;
+  customerId: string;
 }
 
 interface UserContextValue {
@@ -16,6 +17,7 @@ export const UserContext = createContext<UserContextValue>({
     token: '',
     refreshToken: '',
     name: '',
+    customerId : '',
   },
   setUser: () => {},
 });

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { Menu, } from 'antd';
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
@@ -13,6 +13,15 @@ interface NavbarsProps {
 
 const Navbars: React.FC<NavbarsProps> = ({ children }) => {
   const [current, setCurrent] = useState('');
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext)!;
+  const { mutate: logout } = useLogout();
+  const handleLogout = async () => {
+    logout();
+    setUser({ token: '', refreshToken:'', name: '', customerId: '' }); 
+    navigate('/login');
+  };
+
   const onClick: MenuProps['onClick'] = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
@@ -20,12 +29,12 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
       navigate('/');
     } else if (e.key === 'logout') {
       handleLogout();
+    } else if (e.key === 'devices') {
+      navigate('/devices');
+    } else if (e.key === 'flowers') {
+      navigate('/flowers');
     }
   };
-
-  const { setUser } = useContext(UserContext)!;
-  const navigate = useNavigate();
-  const { mutate: logout } = useLogout();
 
   const items: MenuProps['items'] = [
     {
@@ -48,13 +57,6 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
       style: { marginLeft: 'auto' },
     },
   ];
-
-  const handleLogout = async () => {
-    logout();
-    setUser({ token: '', refreshToken:'', name: '' }); 
-    navigate('/login');
-  };
-
 
   return (
     <>
