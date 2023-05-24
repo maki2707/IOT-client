@@ -34,6 +34,12 @@ const MyDevices: React.FC = () => {
       key: "label"
     },
     {
+        title: 'Description',
+        dataIndex: ['additionalInfo', 'description'],
+        key: 'additionalInfo.description',
+      },
+      
+    {
       title: "Created Time",
       dataIndex: "createdTime",
       key: "createdTime",

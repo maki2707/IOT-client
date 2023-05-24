@@ -1,8 +1,10 @@
 import useAxios from "./useAxios";
 import { useQuery } from "react-query";
+import { TKeys } from "../util/TelemetryKeys";
 
 export const useGetUser = () => {
     const axios = useAxios();
+    const customer = localStorage.getItem("customerId")
     const getUser = async () => {
         try {
             const { data } = await axios.get(`/api/auth/user`);

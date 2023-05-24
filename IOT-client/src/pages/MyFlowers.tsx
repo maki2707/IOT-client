@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from '../hooks/useAxios';
 import useGetDevices from '../hooks/useGetDevices';
+import PlantCard from '../components/PlantCard';
 
 interface Device {
   id: {
@@ -9,23 +10,27 @@ interface Device {
   };
 }
 
-interface TelemetryData {
-  [key: string]: any;
-}
+type SingleData = {
+  ts: number;
+  value: string;
+};
 
-interface MyFlowersProps {
-  devices: Device[];
-}
+type PlantData = {
+  temp_ground: SingleData[];
+  hum_ground: SingleData[];
+  cond_ground: SingleData[];
+  temp_air: SingleData[];
+  hum_air: SingleData[];
+};
 
 const MyFlowers: React.FC = () => {
-  const [telemetryData, setTelemetryData] = useState<TelemetryData[]>([]);
+  const [telemetryData, setTelemetryData] = useState<PlantData[]>([]);
   const { data: devicesData, refetch: refetchDevices } = useGetDevices();
-  const axios = useAxios()
-
+  const axios = useAxios();
 
   useEffect(() => {
     const fetchData = async () => {
-      const telemetryPromises = devicesData.map(async (device : any) => {
+      const telemetryPromises = devicesData.map(async (device: Device) => {
         const url = `http://161.53.19.19:45080/api/plugins/telemetry/${device.id.entityType}/${device.id.id}/values/timeseries`;
         try {
           const response = await axios.get(url);
@@ -41,20 +46,12 @@ const MyFlowers: React.FC = () => {
     };
 
     fetchData();
-  }, [axios, devicesData]);
+  }, []);
+
   return (
     <div>
       {telemetryData.map((data, index) => (
-        <div key={index}>
-          <h3>Telemetry Data for Device {devicesData[0].name}</h3>
-          <ul>
-            {Object.entries(data).map(([key, value]) => (
-              <li key={key}>
-                {key}: {JSON.stringify(value)}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <PlantCard key={index} plantData={data} />
       ))}
     </div>
   );

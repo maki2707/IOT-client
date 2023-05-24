@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 
 export const useGetUser = () => {
     const axios = useAxios();
+    
     const getUser = async () => {
         try {
             const { data } = await axios.get(`/api/auth/user`);
