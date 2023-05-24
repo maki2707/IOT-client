@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 
 interface User {
   token: string;
@@ -9,7 +9,7 @@ interface User {
 
 interface UserContextValue {
   user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+  setUser: Dispatch<SetStateAction<User>>;
 }
 
 export const UserContext = createContext<UserContextValue>({
@@ -17,7 +17,7 @@ export const UserContext = createContext<UserContextValue>({
     token: '',
     refreshToken: '',
     name: '',
-    customerId : '',
+    customerId: '',
   },
   setUser: () => {},
 });
@@ -26,7 +26,7 @@ interface UserProviderProps {
   children: ReactNode;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User>(() => {
     // Load initial user data from local storage or set default values
     const storedUser = localStorage.getItem('user');
@@ -38,9 +38,5 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 };
