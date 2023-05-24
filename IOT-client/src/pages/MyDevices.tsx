@@ -1,63 +1,52 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
-import useGetDevices from '../hooks/useGetDevices';
 import { Table } from 'antd';
 
-const MyDevices: React.FC = () => {
-  const { user } = useContext(UserContext)!;
-  const navigate = useNavigate();
-  const { data: devicesData, refetch: refetchDevices } = useGetDevices();
+import useGetDevices from '../hooks/useGetDevices';
 
-  useEffect(() => {
-    if (user.token === '') {
-      console.log(user);
-      console.log('nekaj');
-      navigate('/login');
-      return;
-    }
-    if(localStorage.getItem("customerId") !== '')
-    refetchDevices();
-  }, [user, navigate, refetchDevices]);
+export const MyDevices = () => {
+  const { data, isLoading } = useGetDevices();
 
   const columns = [
-    
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name"
-    },
-    
-    {
-      title: "Label",
-      dataIndex: "label",
-      key: "label"
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-        title: 'Description',
-        dataIndex: ['additionalInfo', 'description'],
-        key: 'additionalInfo.description',
-      },
-      
+      title: 'Label',
+      dataIndex: 'label',
+      key: 'label',
+    },
     {
-      title: "Created Time",
-      dataIndex: "createdTime",
-      key: "createdTime",
+      title: 'Description',
+      dataIndex: ['additionalInfo', 'description'],
+      key: 'additionalInfo.description',
+    },
+
+    {
+      title: 'Created Time',
+      dataIndex: 'createdTime',
+      key: 'createdTime',
       render: (createdTime: number) => {
         const date = new Date(createdTime);
-        return date.toLocaleString(); 
-      }
+
+        return date.toLocaleString();
+      },
     },
   ];
 
   return (
     <>
-        <div style={{marginTop: '2rem'}}>
-            <div className="login-text">List of your devices</div>
-            <Table dataSource={devicesData} columns={columns} />
+      <div>
+        <div className="login-text" style={{ marginBottom: '2rem' }}>
+          List of your devices
         </div>
+        <Table
+          dataSource={data}
+          rowKey={record => record.id.id}
+          loading={isLoading}
+          columns={columns}
+        />
+      </div>
     </>
   );
 };
-
-export default MyDevices;

@@ -1,34 +1,16 @@
-import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/userContext';
+import { Loading } from '../components/Loading';
 import useGetUser from '../hooks/useGetUser';
 
-const Dashboard: React.FC = () => {
-  const { user } = useContext(UserContext)!;
-  const navigate = useNavigate();
-  const { data: userData, refetch } = useGetUser();
+export const Dashboard = () => {
+  const { data: userData, isLoading } = useGetUser();
 
-  useEffect(() => {
-    if (user.token === '') {
-      console.log(user);
-      console.log('nekaj');
-      navigate('/login');
-      return;
-    }
-    refetch();
-  }, [user, navigate, refetch]);
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Loading />
+      </div>
+    );
+  }
 
- 
-
-  return (
-    <>
-      {userData && (
-        <>
-          <div className="login-text">Hi, {userData.firstName}! Welcome back!</div>
-        </>
-      )}
-    </>
-  );
+  return <div className="login-text">Hi, {userData.firstName}! Welcome back!</div>;
 };
-
-export default Dashboard;

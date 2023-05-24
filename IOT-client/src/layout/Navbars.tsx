@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { Menu } from 'antd';
+import { useContext, useState } from 'react';
+import { Menu, MenuProps, Layout } from 'antd';
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import type { MenuProps } from 'antd';
+
 import { UserContext } from '../context/userContext';
-import { Layout } from 'antd';
 import { useLogout } from '../hooks/useLogout';
 
 const { Content, Footer } = Layout;
@@ -13,31 +12,15 @@ interface NavbarsProps {
   children: React.ReactNode;
 }
 
-const Navbars: React.FC<NavbarsProps> = ({ children }) => {
+export const Navbars = ({ children }: NavbarsProps) => {
   const [current, setCurrent] = useState('');
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const { mutate: logout } = useLogout();
-  const handleLogout = async () => {
-    logout();
-    setUser({ token: '', refreshToken:'', name: '', customerId: '' });
-    navigate('/login');
-  };
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e.key);
-    setCurrent(e.key.toString()); // Convert the key to string
-    if (e.key === 'home') {
-      navigate('/');
-    } else if (e.key === 'logout') {
-      handleLogout();
-    } else if (e.key === 'devices') {
-      navigate('/devices');
-    } else if (e.key === 'flowers') {
-      navigate('/flowers');
-    } else if (e.key === 'floorplan') {
-      navigate('/floorplan');
-    }
+  const handleLogout = () => {
+    logout();
+    setUser({ token: '', refreshToken: '', name: '', customerId: '' });
   };
 
   const items: MenuProps['items'] = [
@@ -45,42 +28,56 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
       label: 'Smart flowers',
       key: 'home',
       icon: <HomeOutlined />,
+      onClick: () => navigate('/'),
     },
     {
-      label: 'MY DEVICES',
+      label: 'My devices',
       key: 'devices',
+      onClick: () => navigate('/devices'),
     },
     {
-      label: 'MY PLANTS',
-      key: 'flowers',
+      label: 'My plants',
+      key: 'plants',
+      onClick: () => navigate('/flowers'),
     },
     {
-      label: 'MY FLOORPLAN',
-      key: 'floorplan',
+      label: 'My floor plan',
+      key: 'floor-plan',
+      onClick: () => navigate('/floor-plan'),
+    },
+    {
+      label: 'My alarms',
+      key: 'alarms',
+      onClick: () => navigate('/alarms'),
     },
     {
       label: 'Logout',
       key: 'logout',
       icon: <LogoutOutlined />,
       style: { marginLeft: 'auto' },
+      onClick: () => handleLogout(),
     },
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', display: 'flex' }}>
       <Menu
-        onClick={onClick}
         selectedKeys={[current]}
         mode="horizontal"
         items={items}
-        style={{ borderBottom: '5px solid #1F51FF', paddingBottom: '1rem', fontWeight: '900', height: '8vh' }}
+        onClick={e => setCurrent(e.key)}
+        style={{
+          borderBottom: '5px solid #1F51FF',
+          paddingBottom: '1rem',
+          paddingTop: '1rem',
+          fontWeight: '800',
+        }}
       />
-      <Content style={{ padding: '5vh', minHeight: '85vh' }}>{children}</Content>
-      <Footer style={{ textAlign: 'center', padding: '0', position: 'fixed', bottom: '0', width: '100%' }}>
-        Image by pch.vector on Freepik
+      <Content style={{ padding: '2rem', flexGrow: 1 }}>{children}</Content>
+      <Footer style={{ textAlign: 'center', width: '100%' }}>
+        Made as a project for{' '}
+        <span style={{ fontWeight: 700, color: '#1F51FF' }}>Internet of Things</span> course.
       </Footer>
     </Layout>
   );
 };
-
-export default Navbars;

@@ -1,14 +1,14 @@
 import { useQuery } from 'react-query';
 
 import useAxios from './useAxios';
+import { Alarm } from '../types/Alarm';
 
-export const useGetDevices = () => {
+export const useGetAlarms = () => {
   const axios = useAxios();
-  const customer = localStorage.getItem('customerId');
 
-  const getDevices = async () => {
+  const getDevices = async (): Promise<Alarm[]> => {
     try {
-      const { data } = await axios.get(`/api/customer/${customer}/devices?pageSize=10&page=0`);
+      const { data } = await axios.get(`/api/alarms?pageSize=10&page=0`);
       return data.data;
     } catch (error) {
       console.log('Error:', error);
@@ -16,10 +16,8 @@ export const useGetDevices = () => {
     }
   };
 
-  return useQuery(['devicesData'], () => getDevices(), {
+  return useQuery(['alarms'], () => getDevices(), {
     onError: error => console.log('Query Error:', error),
     staleTime: Infinity,
   });
 };
-
-export default useGetDevices;
