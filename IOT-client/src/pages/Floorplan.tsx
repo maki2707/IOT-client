@@ -70,13 +70,15 @@ const Floorplan: React.FC = () => {
   return (
     <>
       <div>{lastClickedRoom}</div>
-
+    <div style={{height: '60vh'}}>
       <ImgMapper
-        src={Plan}
-        map={{ name: "image-map", areas }}
-        onClick={(area) => handleAreaClick(area.id)}
-        lineWidth={1}
-      />
+          src={Plan}
+          map={{ name: "image-map", areas }}
+          onClick={(area) => handleAreaClick(area.id)}
+          lineWidth={1}
+        />
+    </div>
+      
     </>
   );
 };

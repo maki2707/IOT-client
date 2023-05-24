@@ -7,6 +7,7 @@ import { Dashboard } from './pages/Dashboard';
 import { MyDevices } from './pages/MyDevices';
 import { AlarmsPage } from './pages/Alarms';
 import MyFlowers from './pages/MyFlowers';
+import Floorplan from './pages/Floorplan';
 
 import { Navbars } from './layout/Navbars';
 
@@ -39,6 +40,14 @@ const App = () => {
               element={
                 <Navbars>
                   <MyFlowers />
+                </Navbars>
+              }
+            />
+            <Route
+              path="/floor-plan"
+              element={
+                <Navbars>
+                  <Floorplan />
                 </Navbars>
               }
             />

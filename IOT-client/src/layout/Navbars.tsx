@@ -15,7 +15,7 @@ interface NavbarsProps {
 export const Navbars = ({ children }: NavbarsProps) => {
   const [current, setCurrent] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext)!;
+  const { setUser } = useContext(UserContext);
   const { mutate: logout } = useLogout();
 
   const handleLogout = () => {
@@ -36,9 +36,14 @@ export const Navbars = ({ children }: NavbarsProps) => {
       onClick: () => navigate('/devices'),
     },
     {
-      label: 'My flowers',
-      key: 'flowers',
+      label: 'My plants',
+      key: 'plants',
       onClick: () => navigate('/flowers'),
+    },
+    {
+      label: 'My floor plan',
+      key: 'floor-plan',
+      onClick: () => navigate('/floor-plan'),
     },
     {
       label: 'My alarms',
