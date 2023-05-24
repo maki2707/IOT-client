@@ -8,6 +8,7 @@ import { UserProvider } from './context/userContext';
 import Navbars from './layout/Navbars';
 import MyDevices from './pages/MyDevices';
 import MyFlowers from './pages/MyFlowers';
+import Floorplan from './pages/Floorplan';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => {
               <Route path="/devices" element={<Navbars><MyDevices /></Navbars>} />
               <Route path="/flowers" element={<Navbars><MyFlowers /></Navbars>} />
               <Route path="/login" element={<Login />} />
+              <Route path="/floorplan" element={<Navbars><Floorplan /></Navbars>} />
             </Routes>
         </Router>
       </QueryClientProvider>

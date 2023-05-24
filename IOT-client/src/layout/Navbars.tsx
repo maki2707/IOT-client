@@ -16,17 +16,17 @@ interface NavbarsProps {
 const Navbars: React.FC<NavbarsProps> = ({ children }) => {
   const [current, setCurrent] = useState('');
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext)!;
+  const { setUser } = useContext(UserContext);
   const { mutate: logout } = useLogout();
   const handleLogout = async () => {
     logout();
-    setUser({ token: '', refreshToken:'', name: '', customerId: '' }); 
+    setUser({ token: '', refreshToken:'', name: '', customerId: '' });
     navigate('/login');
   };
 
   const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
+    console.log('click ', e.key);
+    setCurrent(e.key.toString()); // Convert the key to string
     if (e.key === 'home') {
       navigate('/');
     } else if (e.key === 'logout') {
@@ -35,6 +35,8 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
       navigate('/devices');
     } else if (e.key === 'flowers') {
       navigate('/flowers');
+    } else if (e.key === 'floorplan') {
+      navigate('/floorplan');
     }
   };
 
@@ -49,8 +51,12 @@ const Navbars: React.FC<NavbarsProps> = ({ children }) => {
       key: 'devices',
     },
     {
-      label: 'MY FLOWERS',
+      label: 'MY PLANTS',
       key: 'flowers',
+    },
+    {
+      label: 'MY FLOORPLAN',
+      key: 'floorplan',
     },
     {
       label: 'Logout',
