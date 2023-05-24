@@ -41,6 +41,11 @@ export const Navbars = ({ children }: NavbarsProps) => {
       onClick: () => navigate('/flowers'),
     },
     {
+      label: 'My alarms',
+      key: 'alarms',
+      onClick: () => navigate('/alarms'),
+    },
+    {
       label: 'Logout',
       key: 'logout',
       icon: <LogoutOutlined />,

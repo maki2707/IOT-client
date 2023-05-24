@@ -5,8 +5,10 @@ import { UserContext } from './context/userContext';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { MyDevices } from './pages/MyDevices';
-import { Navbars } from './layout/Navbars';
+import { AlarmsPage } from './pages/Alarms';
 import MyFlowers from './pages/MyFlowers';
+
+import { Navbars } from './layout/Navbars';
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -37,6 +39,14 @@ const App = () => {
               element={
                 <Navbars>
                   <MyFlowers />
+                </Navbars>
+              }
+            />
+            <Route
+              path="/alarms"
+              element={
+                <Navbars>
+                  <AlarmsPage />
                 </Navbars>
               }
             />
