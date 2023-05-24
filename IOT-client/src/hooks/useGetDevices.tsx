@@ -1,12 +1,13 @@
 import { useQuery } from 'react-query';
 
 import useAxios from './useAxios';
+import { Device } from '../types/Device';
 
 export const useGetDevices = () => {
   const axios = useAxios();
   const customer = localStorage.getItem('customerId');
 
-  const getDevices = async () => {
+  const getDevices = async (): Promise<Device[]> => {
     try {
       const { data } = await axios.get(`/api/customer/${customer}/devices?pageSize=10&page=0`);
       return data.data;

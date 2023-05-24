@@ -1,6 +1,7 @@
 import { Table } from 'antd';
-import { useGetAlarms } from '../hooks/useGetAlarms';
 import { ColumnsType } from 'antd/es/table';
+
+import { useGetAlarms } from '../hooks/useGetAlarms';
 import { Alarm } from '../types/Alarm';
 
 export const AlarmsPage = () => {
@@ -57,7 +58,7 @@ export const AlarmsPage = () => {
         </div>
         <Table
           dataSource={data ?? []}
-          rowKey={record => record.id?.id ?? 1}
+          rowKey={record => record.id.id}
           loading={isLoading}
           columns={columns}
         />

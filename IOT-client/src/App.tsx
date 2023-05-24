@@ -1,72 +1,45 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
+import { Layout } from 'antd';
+import { Content, Footer } from 'antd/es/layout/layout';
 
 import { UserContext } from './context/userContext';
-import { Login } from './pages/Login';
-import { Dashboard } from './pages/Dashboard';
-import { MyDevices } from './pages/MyDevices';
-import { AlarmsPage } from './pages/Alarms';
-import MyFlowers from './pages/MyFlowers';
-import Floorplan from './pages/Floorplan';
 
-import { Navbars } from './layout/Navbars';
+import { Navbar } from './layout/Navbar';
+import { AlarmsPage, Dashboard, FloorPlan, Login, MyDevices, MyFlowers } from './pages';
 
 const App = () => {
   const { user } = useContext(UserContext);
 
   return (
     <Router>
-      <Routes>
-        {user && user.token ? (
-          <>
-            <Route
-              path="/"
-              element={
-                <Navbars>
-                  <Dashboard />
-                </Navbars>
-              }
-            />
-            <Route
-              path="/devices"
-              element={
-                <Navbars>
-                  <MyDevices />
-                </Navbars>
-              }
-            />
-            <Route
-              path="/flowers"
-              element={
-                <Navbars>
-                  <MyFlowers />
-                </Navbars>
-              }
-            />
-            <Route
-              path="/floor-plan"
-              element={
-                <Navbars>
-                  <Floorplan />
-                </Navbars>
-              }
-            />
-            <Route
-              path="/alarms"
-              element={
-                <Navbars>
-                  <AlarmsPage />
-                </Navbars>
-              }
-            />
-          </>
-        ) : (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/*" element={<Navigate to={'/login'} />} />
-          </>
-        )}
-      </Routes>
+      <Layout style={{ minHeight: '100vh', display: 'flex' }}>
+        <Navbar />
+
+        <Content style={{ padding: '2rem', flexGrow: 1 }}>
+          <Routes>
+            {user && user.token ? (
+              <>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/devices" element={<MyDevices />} />
+                <Route path="/plants" element={<MyFlowers />} />
+                <Route path="/floor-plan" element={<FloorPlan />} />
+                <Route path="/alarms" element={<AlarmsPage />} />
+              </>
+            ) : (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/*" element={<Navigate to={'/login'} />} />
+              </>
+            )}
+          </Routes>
+        </Content>
+
+        <Footer style={{ textAlign: 'center', width: '100%' }}>
+          Made as a project for{' '}
+          <span style={{ fontWeight: 700, color: '#1F51FF' }}>Internet of Things</span> course.
+        </Footer>
+      </Layout>
     </Router>
   );
 };

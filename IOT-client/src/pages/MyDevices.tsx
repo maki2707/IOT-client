@@ -1,11 +1,13 @@
 import { Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
 
 import useGetDevices from '../hooks/useGetDevices';
+import { Device } from '../types/Device';
 
 export const MyDevices = () => {
   const { data, isLoading } = useGetDevices();
 
-  const columns = [
+  const columns: ColumnsType<Device> = [
     {
       title: 'Name',
       dataIndex: 'name',
