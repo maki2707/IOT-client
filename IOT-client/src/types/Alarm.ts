@@ -1,9 +1,6 @@
 import { AlarmSeverityEnum, AlarmStatusEnum, EntityTypeEnum } from './enums';
+import { AlarmId, CustomerId, Id, TenantId } from './ids';
 
-type Id = { id: string };
-export type AlarmId = Id & { entityType: EntityTypeEnum.ALARM };
-export type TenantId = Id & { entityType: EntityTypeEnum.TENANT };
-export type CustomerId = Id & { entityType: EntityTypeEnum.CUSTOMER };
 export type Originator = Id & {
   entityType: EntityTypeEnum;
 };
@@ -14,7 +11,7 @@ export type Alarm = {
   originator: Originator;
   severity: AlarmSeverityEnum;
   status: AlarmStatusEnum;
-  id?: AlarmId;
+  id: AlarmId;
   createdTime?: number;
   tenantId?: TenantId;
   customerId?: CustomerId;
