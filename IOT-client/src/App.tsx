@@ -14,26 +14,29 @@ const App = () => {
   return (
     <Router>
       <Layout style={{ minHeight: '100vh', display: 'flex' }}>
-        <Navbar />
-
-        <Content style={{ padding: '2rem', flexGrow: 1 }}>
-          <Routes>
-            {user && user.token ? (
-              <>
+        {user && user.token ? (
+          <>
+            <Navbar />
+            <Content style={{ padding: '2rem', flexGrow: 1 }}>
+              <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/devices" element={<MyDevices />} />
                 <Route path="/plants" element={<MyFlowers />} />
                 <Route path="/floor-plan" element={<FloorPlan />} />
                 <Route path="/alarms" element={<AlarmsPage />} />
-              </>
-            ) : (
-              <>
+              </Routes>
+            </Content>
+          </>
+        ) : (
+          <>
+            <Content style={{ padding: '2rem', flexGrow: 1 }}>
+              <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/*" element={<Navigate to={'/login'} />} />
-              </>
-            )}
-          </Routes>
-        </Content>
+              </Routes>
+            </Content>
+          </>
+        )}
 
         <Footer style={{ textAlign: 'center', width: '100%' }}>
           Made as a project for{' '}
