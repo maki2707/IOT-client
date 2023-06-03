@@ -27,23 +27,19 @@ export const MyFlowers = () => {
     <>
       {devicesData && (
         <div>
-          <div className="login-text">- My plants -</div>
+          <div className="plant-text">My plants</div>
           <div className="plants-box">
-            {devicesData.map((device, index) => (
+            {devicesData.map((device, index) => (<>
               <PlantCard
                 key={index}
                 dataD={device}
                 plantName={device.additionalInfo.description}
-              />
+              /></>
             ))}
           </div>
         </div>
       )}
-      <div className="average-title">
-        - work in progress -
-        <div>---average data in the last 7 days + graph?</div>
-        <div>---floorplan - already did some testing</div>
-      </div>
+     
     </>
   );
 };
