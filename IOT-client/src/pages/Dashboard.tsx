@@ -12,5 +12,9 @@ export const Dashboard = () => {
     );
   }
 
-  return <div className="login-text">Hi, {userData.firstName}! Welcome back!</div>;
+  return (
+    <div>
+      <div className="login-text">Hi, {userData.firstName}! Welcome back!</div>
+    </div>
+  );
 };
