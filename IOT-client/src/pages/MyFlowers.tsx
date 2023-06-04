@@ -21,7 +21,6 @@ export const MyFlowers = () => {
   const { data: devicesData } = useGetDevices();
   const axios = useAxios();
   const [timePeriod, setTimePeriod] = useState<number>(7);
-  console.log(devicesData);
 
   return (
     <>

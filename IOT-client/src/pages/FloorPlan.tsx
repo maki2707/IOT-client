@@ -14,7 +14,6 @@ export const FloorPlan: React.FC = () => {
   const [lastClickedRoom, setLastClickedRoom] = useState<string>('');
 
   const handleAreaClick = (areaTitle: string | undefined) => {
-    console.log(areaTitle);
     setLastClickedRoom(areaTitle || '');
   };
 

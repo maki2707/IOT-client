@@ -20,7 +20,7 @@ export const useGetAvgPlantTelemetry = (device: PlantDevice) => {
   const currentTime = new Date().getTime();
   const startTime = currentTime - 25 * 24 * 60 * 60 * 1000;
   const url = `/api/plugins/telemetry/${device.id.entityType}/${device.id.id}/values/timeseries`;
-  console.log("tu sam")
+
   const getAvgPlantTelemetry = async () => {
     try {
       const response = await axios.get(url, {
@@ -33,10 +33,9 @@ export const useGetAvgPlantTelemetry = (device: PlantDevice) => {
           interval: 43200000,
           limit: 1000,
           agg: '',
-          orderBy:'ASC'
+          orderBy: 'ASC',
         },
       });
-      console.log(response)
       return response.data;
     } catch (error) {
       console.log('Error fetching telemetry data:', error);
