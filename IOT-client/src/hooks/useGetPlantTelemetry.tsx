@@ -20,8 +20,10 @@ export const useGetPlantTelemetry = (device: PlantDevice) => {
 
   const getPlantTelemetry = async (): Promise<PlantData> => {
     try {
-      const { data } = await axios.get(`/api/plugins/telemetry/${device.id.entityType}/${device.id.id}/values/timeseries`);
-      console.log(data)
+      const { data } = await axios.get(
+        `/api/plugins/telemetry/${device.id.entityType}/${device.id.id}/values/timeseries`
+      );
+
       return data;
     } catch (error) {
       console.log('Error:', error);

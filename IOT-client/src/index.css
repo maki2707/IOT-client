@@ -148,9 +148,8 @@ code {
 }
 
 .plants-box {
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: auto;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 

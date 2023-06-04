@@ -12,7 +12,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-
 ChartJS.register(
   TimeScale,
   LinearScale,
@@ -30,28 +29,27 @@ type GraphProps = {
 };
 
 const Graph: React.FC<GraphProps> = ({ data, target }) => {
-    console.log(target, data[target])
- let c = 1 
+  // console.log(target, data[target])
+  let c = 1;
   const transformData = () => {
     const graphData = data[target].map((item: any) => {
-        const date = new Date(item.ts);
-        date.setDate(date.getDate() );
-        
-        return {
-          x: date,
-          y: parseFloat(item.value),
-        };
-      });
+      const date = new Date(item.ts);
+      date.setDate(date.getDate());
 
-    console.log(graphData);
-    const labels = graphData.map((dataItem:any) => {
-        const options = { month: 'short', day: 'numeric' };
-        return dataItem.x.toLocaleDateString('en-US', options);
-      });
+      return {
+        x: date,
+        y: parseFloat(item.value),
+      };
+    });
 
+    // console.log(graphData);
+    const labels = graphData.map((dataItem: any) => {
+      const options = { month: 'short', day: 'numeric' };
+      return dataItem.x.toLocaleDateString('en-US', options);
+    });
 
     return {
-        labels,
+      labels,
       datasets: [
         {
           label: target,
@@ -78,7 +76,7 @@ const Graph: React.FC<GraphProps> = ({ data, target }) => {
       y: {
         title: {
           display: true,
-          text: 'Measurement Unit', 
+          text: 'Measurement Unit',
           font: {
             size: 14,
             weight: 'bold',
@@ -92,7 +90,6 @@ const Graph: React.FC<GraphProps> = ({ data, target }) => {
         radius: 0, // Uklanja oznaku kružića za svaku točku
       },
     },
-   
   };
 
   return <Line options={options} data={chartData} />;

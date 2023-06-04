@@ -14,9 +14,8 @@ export const useGetUser = () => {
     }
     return;
   };
-  return useQuery(['userData'], () => getUser(), {
+  return useQuery(['userData'], getUser, {
     onError: error => console.log(error),
-    staleTime: Infinity,
   });
 };
 

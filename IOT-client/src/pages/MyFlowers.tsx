@@ -21,7 +21,6 @@ export const MyFlowers = () => {
   const { data: devicesData } = useGetDevices();
   const axios = useAxios();
   const [timePeriod, setTimePeriod] = useState<number>(7);
-  console.log(devicesData);
 
   return (
     <>
@@ -29,17 +28,12 @@ export const MyFlowers = () => {
         <div>
           <div className="plant-text">My plants</div>
           <div className="plants-box">
-            {devicesData.map((device, index) => (<>
-              <PlantCard
-                key={index}
-                dataD={device}
-                plantName={device.additionalInfo.description}
-              /></>
+            {devicesData.map((device, index) => (
+              <PlantCard key={index} dataD={device} plantName={device.additionalInfo.description} />
             ))}
           </div>
         </div>
       )}
-     
     </>
   );
 };

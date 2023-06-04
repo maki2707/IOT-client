@@ -1,23 +1,33 @@
 import { useQuery } from 'react-query';
 
 import useAxios from './useAxios';
-import { Alarm } from '../types/Alarm';
+import { PaginationType } from '../pages';
 
-export const useGetAlarms = () => {
+export const useGetAlarms = (pagination: PaginationType) => {
   const axios = useAxios();
 
-  const getDevices = async (): Promise<Alarm[]> => {
+  const getDevices = async (pagination: PaginationType) => {
     try {
-      const { data } = await axios.get(`/api/alarms?pageSize=10&page=0`);
-      return data.data;
+      const { data } = await axios.get(`/api/alarms`, {
+        params: {
+          ...pagination,
+          sortProperty: 'createdTime',
+          sortOrder: 'DESC',
+          fetchOriginator: true,
+        },
+      });
+      return data;
     } catch (error) {
       console.log('Error:', error);
       throw error;
     }
   };
 
-  return useQuery(['alarms'], () => getDevices(), {
-    onError: error => console.log('Query Error:', error),
-    staleTime: Infinity,
-  });
+  return useQuery(
+    [`alarms-${pagination.page}-${pagination.pageSize}`],
+    () => getDevices(pagination),
+    {
+      onError: error => console.log('Query Error:', error),
+    }
+  );
 };
