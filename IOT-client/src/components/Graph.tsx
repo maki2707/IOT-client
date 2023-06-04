@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Chart as ChartJS,
   TimeScale,
@@ -29,8 +29,6 @@ type GraphProps = {
 };
 
 const Graph: React.FC<GraphProps> = ({ data, target }) => {
-  // console.log(target, data[target])
-  let c = 1;
   const transformData = () => {
     const graphData = data[target].map((item: any) => {
       const date = new Date(item.ts);
@@ -42,7 +40,6 @@ const Graph: React.FC<GraphProps> = ({ data, target }) => {
       };
     });
 
-    // console.log(graphData);
     const labels = graphData.map((dataItem: any) => {
       const options = { month: 'short', day: 'numeric' };
       return dataItem.x.toLocaleDateString('en-US', options);

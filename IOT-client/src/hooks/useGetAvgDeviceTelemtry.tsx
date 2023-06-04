@@ -2,19 +2,6 @@ import { useQuery } from 'react-query';
 import useAxios from './useAxios';
 import { PlantDevice } from '../types/PlantDevice';
 
-type SingleData = {
-  ts: number;
-  value: string;
-};
-
-type PlantData = {
-  temp_ground: SingleData[];
-  hum_ground: SingleData[];
-  cond_ground: SingleData[];
-  temp_air: SingleData[];
-  hum_air: SingleData[];
-};
-
 export const useGetAvgPlantTelemetry = (device: PlantDevice) => {
   const axios = useAxios();
   const currentTime = new Date().getTime();
