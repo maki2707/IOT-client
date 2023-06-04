@@ -7,8 +7,17 @@ import { Alarm } from '../types/Alarm';
 import { useSetAlarmAcknowledged } from '../hooks/useSetAlarmAcknowledged';
 import { AlarmStatusEnum } from '../types/enums';
 
+export type PaginationType = {
+  pageSize: number;
+  page: number;
+};
+
 export const AlarmsPage = () => {
-  const { data, isLoading, refetch, isRefetching } = useGetAlarms();
+  const [pagination, setPagination] = useState<PaginationType>({
+    page: 0,
+    pageSize: 10,
+  });
+  const { data, isLoading, refetch, isRefetching } = useGetAlarms(pagination);
   const setAlarmAcknowledged = useSetAlarmAcknowledged();
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
 
@@ -82,10 +91,17 @@ export const AlarmsPage = () => {
           Acknowledge
         </Button>
         <Table
-          dataSource={data ?? []}
+          dataSource={data?.data ?? []}
           rowKey={record => record.id.id}
           loading={isLoading || isRefetching}
           columns={columns}
+          pagination={{
+            current: pagination.page + 1,
+            onChange(page, pageSize) {
+              setPagination({ page: page - 1, pageSize });
+            },
+            total: data?.totalElements,
+          }}
           rowSelection={{
             selectedRowKeys,
             onChange: setSelectedRowKeys,
