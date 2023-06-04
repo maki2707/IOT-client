@@ -17,10 +17,6 @@ export const FloorPlan: React.FC = () => {
     setLastClickedRoom(areaTitle || '');
   };
 
-  const isRoomClicked = (areaTitle: string) => {
-    return areaTitle === lastClickedRoom ? 'highlighted-room' : '';
-  };
-
   const areas: Area[] = [
     {
       id: 'office1',

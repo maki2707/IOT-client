@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
-import useAxios from '../hooks/useAxios';
+import { Button } from 'antd';
+import { useActuate } from '../hooks/useActuate';
 import useGetDevices from '../hooks/useGetDevices';
 import PlantCard from '../components/PlantCard';
-import { Input } from 'antd';
-
-type SingleData = {
-  ts: number;
-  value: string;
-};
-
-type PlantData = {
-  temp_ground: SingleData[];
-  hum_ground: SingleData[];
-  cond_ground: SingleData[];
-  temp_air: SingleData[];
-  hum_air: SingleData[];
-};
 
 export const MyFlowers = () => {
   const { data: devicesData } = useGetDevices();
-  const axios = useAxios();
-  const [timePeriod, setTimePeriod] = useState<number>(7);
+  const actuate = useActuate();
+
+  const handleActuate = async () => {
+    await actuate();
+  };
 
   return (
     <>
       {devicesData && (
         <div>
-          <div className="plant-text">My plants</div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div className="plant-text">My plants</div>
+            <Button onClick={handleActuate} type="primary">
+              Actuate
+            </Button>
+          </div>
           <div className="plants-box">
             {devicesData.map((device, index) => (
               <PlantCard key={index} dataD={device} plantName={device.additionalInfo.description} />

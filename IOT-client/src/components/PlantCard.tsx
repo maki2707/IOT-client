@@ -10,19 +10,6 @@ import React, { useState } from 'react';
 import { useGetAvgPlantTelemetry } from '../hooks/useGetAvgDeviceTelemtry';
 import Graph from './Graph';
 
-type PlantData = {
-  temp_ground: SingleData[];
-  hum_ground: SingleData[];
-  cond_ground: SingleData[];
-  temp_air: SingleData[];
-  hum_air: SingleData[];
-};
-
-type SingleData = {
-  ts: number;
-  value: string;
-};
-
 type PlantCardProps = {
   dataD: any;
   plantName: string;
