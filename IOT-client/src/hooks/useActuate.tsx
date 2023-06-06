@@ -7,10 +7,11 @@ export const useActuate = () => {
 
   const actuate = async () => {
     try {
-      const { data } = await axios.post(
-        `/api/plugins/rpc/oneway/b9a73e30-fa4b-11ed-993d-8d74c2abdddd`,
-        { method: 'actuate', params: {} }
-      );
+      const { data } = await axios.post(`/api/rpc/oneway/b9a73e30-fa4b-11ed-993d-8d74c2abdddd`, {
+        method: 'actuate',
+        params: {},
+        timeout: 20000,
+      });
       return data;
     } catch (error) {
       console.log('Error:', error);
